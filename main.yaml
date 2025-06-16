@@ -21,7 +21,7 @@ Resources:
   S3Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/s3.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/s3.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         ProjectTag: !Ref ProjectTag
@@ -29,7 +29,7 @@ Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/vpc.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/vpc.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         S3BucketName: !GetAtt S3Stack.Outputs.S3BucketName
@@ -38,7 +38,7 @@ Resources:
   SecurityGroupsStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/security-groups.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/security-groups.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         VPCId: !GetAtt VPCStack.Outputs.VPCId
@@ -47,7 +47,7 @@ Resources:
   ECSClusterStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/ecs-cluster.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/ecs-cluster.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         ProjectTag: !Ref ProjectTag
@@ -55,7 +55,7 @@ Resources:
   ALBStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/alb.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/alb.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         VPCId: !GetAtt VPCStack.Outputs.VPCId
@@ -67,7 +67,7 @@ Resources:
   ECSServiceStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/ecs-service.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/ecs-service.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
@@ -84,7 +84,7 @@ Resources:
   CODEdeployStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./sub/codedeploy.yaml
+      TemplateURL: https://dicksonanyaele-cfn-uploader-dev.s3.amazonaws.com/templates/sub/codedeploy.yaml
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
