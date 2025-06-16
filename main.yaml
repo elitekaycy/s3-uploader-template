@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Default main template for Uploader web app infrastructure'
+
+Parameters:
+  EnvironmentName:
+    Description: 'Application environment name (dev/stage/prod)'
+    Type: String
+    Default: 'dev'
+
+  ECRRepoName:
+    Description: 'Name of the ECR repository for the application'
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /uploader/ecr-repo-name
+
+  ProjectTag:
+    Description: 'Project identifier tag'
+    Type: String
+    Default: 'week_5_project'
+
+Resources:
+  S3Stack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./s3.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        ProjectTag: !Ref ProjectTag
+
+  VPCStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./vpc.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        S3BucketName: !GetAtt S3Stack.Outputs.S3BucketName
+        ProjectTag: !Ref ProjectTag
+
+  SecurityGroupsStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./security-groups.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        VPCId: !GetAtt VPCStack.Outputs.VPCId
+        ProjectTag: !Ref ProjectTag
+
+  ECSClusterStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./ecs-cluster.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        ProjectTag: !Ref ProjectTag
+
+  ALBStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./alb.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        VPCId: !GetAtt VPCStack.Outputs.VPCId
+        PublicSubnet1: !GetAtt VPCStack.Outputs.PublicSubnet1
+        PublicSubnet2: !GetAtt VPCStack.Outputs.PublicSubnet2
+        ALBSecurityGroup: !GetAtt SecurityGroupsStack.Outputs.ALBSecurityGroup
+        ProjectTag: !Ref ProjectTag
+
+  ECSServiceStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./ecs-service.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
+        ALBArn: !GetAtt ALBStack.Outputs.ALBArn
+        ALBListener: !GetAtt ALBStack.Outputs.ALBListener
+        ECSSecurityGroup: !GetAtt SecurityGroupsStack.Outputs.ECSSecurityGroup
+        PrivateSubnet1: !GetAtt VPCStack.Outputs.PrivateSubnet1
+        PrivateSubnet2: !GetAtt VPCStack.Outputs.PrivateSubnet2
+        S3BucketName: !GetAtt S3Stack.Outputs.S3BucketName
+        AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
+        ECRRepoName: !Ref ECRRepoName
+        ProjectTag: !Ref ProjectTag
+
+Outputs:
+  ALBDNSName:
+    Description: 'DNS name of the ALB'
+    Value: !GetAtt ALBStack.Outputs.ALBDNSName
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-ALB-DNS
+
+  S3BucketName:
+    Description: 'Name of the S3 bucket for images'
+    Value: !GetAtt S3Stack.Outputs.S3BucketName
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-S3-Bucket
