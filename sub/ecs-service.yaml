@@ -29,6 +29,12 @@ Parameters:
   ECRRepoName:
     Description: 'Name of the ECR repository for the application'
     Type: String
+  BlueTargetGroupArn:
+    Type: String
+    Description: "ARN of the Blue Target Group"
+  GreenTargetGroupArn:
+    Type: String
+    Description: "ARN of the Green Target Group"
   AutoScalingRoleArn:
     Description: 'ARN of the IAM Role for ECS Auto Scaling'
     Type: String
@@ -178,6 +184,10 @@ Resources:
             - !Ref PrivateSubnet1
             - !Ref PrivateSubnet2
       TaskDefinition: !Ref ECSTaskDefinition
+      LoadBalancers:
+        - ContainerName: !Sub ${EnvironmentName}-uploader-container
+          ContainerPort: 80
+          TargetGroupArn: !Ref BlueTargetGroupArn
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-ecs-service

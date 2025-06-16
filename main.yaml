@@ -83,6 +83,8 @@ Resources:
         PrivateSubnet2: !GetAtt VPCStack.Outputs.PrivateSubnet2
         S3BucketName: !GetAtt S3Stack.Outputs.S3BucketName
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
+        BlueTargetGroupArn: !GetAtt ALBStack.Outputs.BlueTargetGroupArn
+        GreenTargetGroupArn: !GetAtt ALBStack.Outputs.GreenTargetGroupArn
         ECRRepoName: !Ref ECRRepoName
         ProjectTag: !Ref ProjectTag
 
