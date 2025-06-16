@@ -17,7 +17,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Sub ${EnvironmentName}-uploader-cluster
+      ClusterName: !Sub ${EnvironmentName}-${AWS::StackName}-uploader-cluster
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
@@ -70,7 +70,7 @@ Outputs:
     Description: 'ECS Cluster Name'
     Value: !Ref ECSCluster
     Export:
-      Name: !Sub ${EnvironmentName}-Uploader-ECS-Cluster
+      Name: !Sub ${EnvironmentName}-${AWS::StackName}-Uploader-ECS-Cluster
   ECSAutoScalingRoleArn:
     Description: "Auto Scaling IAM Role ARN"
     Value: !GetAtt ECSAutoScalingRole.Arn
