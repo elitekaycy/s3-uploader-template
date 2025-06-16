@@ -97,6 +97,8 @@ Resources:
                   - 'ecr:BatchGetImage'
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
+                  - 'logs:CreateLogGroup'  
+                  - 'logs:DescribeLogStreams'
                 Resource: '*'
       Tags:
         - Key: Name
