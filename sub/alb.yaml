@@ -112,7 +112,7 @@ Outputs:
     Description: 'DNS name of the ALB'
     Value: !GetAtt ALB.DNSName
     Export:
-      Name: !Sub ${EnvironmentName}-Uploader-ALB-DNS
+      Name: !Sub ${EnvironmentName}-${AWS::StackName}-Uploader-ALB-DNS
 
   ALBListener:
     Description: 'ALB Listener ARN'
