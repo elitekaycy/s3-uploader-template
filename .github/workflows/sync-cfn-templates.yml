@@ -3,10 +3,7 @@ name: Sync CloudFormation Sub Templates to S3
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'sub/**/*.yaml'
-      - 'sub/**/*.yml'
+      - main 
 
 jobs:
   upload-sub-templates:
