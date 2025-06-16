@@ -44,7 +44,7 @@ Resources:
   BlueTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub ${EnvironmentName}-tg-blue
+      Name: !Sub ${EnvironmentName}-${AWS::StackName}-tg-blue
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCId
@@ -59,14 +59,14 @@ Resources:
         HttpCode: 200
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-tg-blue
+          Value: !Sub ${EnvironmentName}-${AWS::StackName}-tg-blue
         - Key: Project
           Value: !Ref ProjectTag 
 
   GreenTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub ${EnvironmentName}-tg-green
+      Name: !Sub ${EnvironmentName}-${AWS::StackName}-tg-green
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCId
@@ -81,7 +81,7 @@ Resources:
         HttpCode: 200
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-tg-green
+          Value: !Sub ${EnvironmentName}-${AWS::StackName}-tg-green
         - Key: Project
           Value: !Ref ProjectTag 
 
