@@ -128,7 +128,7 @@ Resources:
         - Name: !Sub ${EnvironmentName}-uploader-container
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepoName}:latest
           PortMappings:
-            - ContainerPort: 80
+            - ContainerPort: 8080
               Protocol: tcp
           Environment:
             - Name: S3_BUCKET_NAME
