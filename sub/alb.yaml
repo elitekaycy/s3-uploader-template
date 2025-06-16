@@ -44,7 +44,6 @@ Resources:
   BlueTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub ${EnvironmentName}-tg-blue
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCId
@@ -66,7 +65,6 @@ Resources:
   GreenTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub ${EnvironmentName}-tg-green
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCId
