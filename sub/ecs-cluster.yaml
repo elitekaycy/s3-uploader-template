@@ -14,15 +14,8 @@ Parameters:
     Default: 'week_5_project'
 
 Resources:
-  ECSServiceLinkedRole:
-    Type: AWS::IAM::ServiceLinkedRole
-    Properties:
-      AWSServiceName: ecs.amazonaws.com
-      Description: 'Role for ECS to call AWS services on your behalf'
-
   ECSCluster:
     Type: AWS::ECS::Cluster
-    DependsOn: ECSServiceLinkedRole
     Properties:
       ClusterName: !Sub ${EnvironmentName}-uploader-cluster
       CapacityProviders:
@@ -34,8 +27,6 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-ecs-cluster
-        - Key: Environment
-          Value: !Ref EnvironmentName
         - Key: Project
           Value: !Ref ProjectTag
 
