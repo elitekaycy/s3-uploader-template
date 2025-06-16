@@ -54,10 +54,13 @@ Resources:
     Properties:
       TemplateURL: !Sub "${TemplateBaseURL}/vpc-endpoints.yaml"
       Parameters:
+        EnvironmentName: !Ref EnvironmentName
         VPCId: !GetAtt VPCStack.Outputs.VPCId
         PrivateSubnet1: !GetAtt VPCStack.Outputs.PrivateSubnet1
         PrivateSubnet2: !GetAtt VPCStack.Outputs.PrivateSubnet2
         EndpointSecurityGroup: !GetAtt VPCStack.Outputs.VPCEndpointSecurityGroup
+        PrivateRouteTable1: !GetAtt VPCStack.Outputs.PrivateRouteTable1
+        PrivateRouteTable2: !GetAtt VPCStack.Outputs.PrivateRouteTable2
         ProjectTag: !Ref ProjectTag
 
   ECSClusterStack:

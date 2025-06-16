@@ -283,6 +283,18 @@ Outputs:
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-Public-Subnet-2
 
+  PrivateRouteTable1:
+    Description: "ID of the first private route table"
+    Value: !Ref PrivateRouteTable1
+    Export:
+      Name: !Sub "${EnvironmentName}-Uploader-PrivateRouteTable1Id"
+
+  PrivateRouteTable2:
+    Description: "ID of the second private route table"
+    Value: !Ref PrivateRouteTable2
+    Export:
+      Name: !Sub "${EnvironmentName}-Uploader-PrivateRouteTable2Id"
+
   VPCEndpointSecurityGroup:
     Description: 'Security Group ID for VPC endpoints'
     Value: !Ref VPCEndpointSecurityGroup
