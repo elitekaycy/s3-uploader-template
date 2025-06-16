@@ -188,7 +188,7 @@ Resources:
       TaskDefinition: !Ref ECSTaskDefinition
       LoadBalancers:
         - ContainerName: !Sub ${EnvironmentName}-uploader-container
-          ContainerPort: 80
+          ContainerPort: 8080
           TargetGroupArn: !Ref BlueTargetGroupArn
       Tags:
         - Key: Name
