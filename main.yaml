@@ -49,6 +49,17 @@ Resources:
         VPCId: !GetAtt VPCStack.Outputs.VPCId
         ProjectTag: !Ref ProjectTag
 
+  VPCEndpointsStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateBaseURL}/vpc-endpoints.yaml"
+      Parameters:
+        VPCId: !GetAtt VPCStack.Outputs.VPCId
+        PrivateSubnet1: !GetAtt VPCStack.Outputs.PrivateSubnet1
+        PrivateSubnet2: !GetAtt VPCStack.Outputs.PrivateSubnet2
+        EndpointSecurityGroup: !GetAtt SecurityGroupsStack.Outputs.VPCEndpointSecurityGroup
+        ProjectTag: !Ref ProjectTag
+
   ECSClusterStack:
     Type: AWS::CloudFormation::Stack
     Properties:
