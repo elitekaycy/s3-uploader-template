@@ -109,4 +109,4 @@ Outputs:
     Description: 'Name of the S3 bucket for images'
     Value: !GetAtt S3Stack.Outputs.S3BucketName
     Export:
-      Name: !Sub ${EnvironmentName}-Uploader-S3-Bucket
+      Name: !Sub ${EnvironmentName}-${AWS::StackName}-Uploader-S3-Bucket
