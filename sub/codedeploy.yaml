@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CodeDeploy setup for blue/green ECS deployments for Uploader app'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+  ECSCluster:
+    Type: String
+  ECSServiceName:
+    Type: String
+  ALBListenerArn:
+    Type: String
+  AutoScalingRoleArn:
+    Type: String
+  ProjectTag:
+    Type: String
+    Default: 'week_5_project'
+
+Resources:
+  CodeDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${EnvironmentName}-uploader-codedeploy-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codedeploy.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForECS
+
+  CodeDeployApplication:
+    Type: AWS::CodeDeploy::Application
+    Properties:
+      ApplicationName: !Sub ${EnvironmentName}-uploader-codedeploy-app
+      ComputePlatform: ECS
+
+  CodeDeployDeploymentGroup:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      ApplicationName: !Ref CodeDeployApplication
+      DeploymentGroupName: !Sub ${EnvironmentName}-uploader-deployment-group
+      ServiceRoleArn: !GetAtt CodeDeployRole.Arn
+      DeploymentConfigName: CodeDeployDefault.ECSAllAtOnce
+      DeploymentStyle:
+        DeploymentType: BLUE_GREEN
+        DeploymentOption: WITH_TRAFFIC_CONTROL
+      BlueGreenDeploymentConfiguration:
+        TerminateBlueInstancesOnDeploymentSuccess:
+          Action: TERMINATE
+          TerminationWaitTimeInMinutes: 5
+        DeploymentReadyOption:
+          ActionOnTimeout: CONTINUE_DEPLOYMENT
+          WaitTimeInMinutes: 0
+      LoadBalancerInfo:
+        TargetGroupPairInfoList:
+          - TargetGroups:
+              - Name: !Sub ${EnvironmentName}-tg-blue
+              - Name: !Sub ${EnvironmentName}-tg-green
+            ProdTrafficRoute:
+              ListenerArns:
+                - !Ref ALBListenerArn
+      ECSService:
+        ClusterName: !Ref ECSCluster
+        ServiceName: !Ref ECSServiceName
+
+Outputs:
+  CodeDeployDeploymentGroup:
+    Description: 'Deployment Group for ECS Blue/Green'
+    Value: !Ref CodeDeployDeploymentGroup
+

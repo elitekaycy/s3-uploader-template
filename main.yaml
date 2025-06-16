@@ -80,6 +80,18 @@ Resources:
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
         ECRRepoName: !Ref ECRRepoName
         ProjectTag: !Ref ProjectTag
+  
+  CODEdeployStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./sub/codedeploy.yaml
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
+        ECSServiceName: !GetAtt ECSServiceStack.Outputs.ECSService
+        ALBListener: !GetAtt ALBStack.Outputs.ALBListener
+        AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
+        ProjectTag: !Ref ProjectTag
 
 Outputs:
   ALBDNSName:

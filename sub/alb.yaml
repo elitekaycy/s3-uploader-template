@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'ALB for Uploader application'
+Description: 'ALB for Uploader application with Blue/Green Target Groups'
 
 Parameters:
   EnvironmentName:
@@ -41,12 +41,56 @@ Resources:
         - Key: Project
           Value: !Ref ProjectTag 
 
+  BlueTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${EnvironmentName}-tg-blue
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPCId
+      TargetType: ip
+      HealthCheckPath: /
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 3
+      HealthCheckProtocol: HTTP
+      Matcher:
+        HttpCode: 200
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-tg-blue
+        - Key: Project
+          Value: !Ref ProjectTag 
+
+  GreenTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${EnvironmentName}-tg-green
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPCId
+      TargetType: ip
+      HealthCheckPath: /
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 3
+      HealthCheckProtocol: HTTP
+      Matcher:
+        HttpCode: 200
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-tg-green
+        - Key: Project
+          Value: !Ref ProjectTag 
+
   ALBListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref ALBDefaultTargetGroup
+          TargetGroupArn: !Ref BlueTargetGroup 
       LoadBalancerArn: !Ref ALB
       Port: 80
       Protocol: HTTP
@@ -56,44 +100,34 @@ Resources:
         - Key: Project
           Value: !Ref ProjectTag 
 
-  ALBDefaultTargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      HealthCheckIntervalSeconds: 30
-      HealthCheckPath: /
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 10
-      HealthyThresholdCount: 3
-      UnhealthyThresholdCount: 3
-      Name: !Sub ${EnvironmentName}-uploader-tg
-      Port: 80
-      Protocol: HTTP
-      TargetType: ip
-      VpcId: !Ref VPCId
-      Tags:
-        - Key: Name
-          Value: !Sub ${EnvironmentName}-uploader-default-tg
-        - Key: Project
-          Value: !Ref ProjectTag 
-
 Outputs:
+
   ALBArn:
     Description: 'ARN of the ALB'
     Value: !Ref ALB
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-ALB-ARN
+
   ALBDNSName:
     Description: 'DNS name of the ALB'
     Value: !GetAtt ALB.DNSName
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-ALB-DNS
+
   ALBListener:
     Description: 'ALB Listener ARN'
     Value: !Ref ALBListener
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-ALB-Listener
-  ALBDefaultTargetGroup:
-    Description: 'Default Target Group ARN'
-    Value: !Ref ALBDefaultTargetGroup
+
+  BlueTargetGroupArn:
+    Description: 'Blue Target Group ARN'
+    Value: !Ref BlueTargetGroup
     Export:
-      Name: !Sub ${EnvironmentName}-Uploader-ALB-TG
+      Name: !Sub ${EnvironmentName}-Uploader-ALB-TG-Blue
+
+  GreenTargetGroupArn:
+    Description: 'Green Target Group ARN'
+    Value: !Ref GreenTargetGroup
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-ALB-TG-Green
