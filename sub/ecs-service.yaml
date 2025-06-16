@@ -173,6 +173,7 @@ Resources:
 
   ECSServiceAutoScaling:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
+    DependsOn: ECSService
     Properties:
       MaxCapacity: 4
       MinCapacity: 2
