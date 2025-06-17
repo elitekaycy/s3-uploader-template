@@ -19,13 +19,13 @@ Parameters:
     Description: Second private subnet
 
   PrivateRouteTable1:
-    Type: AWS::EC2::RouteTable::Id
+    Type: String
     Description: First private route table
 
   PrivateRouteTable2:
-    Type: AWS::EC2::RouteTable::Id
+    Type: String
     Description: Second private route table
-
+ 
   EndpointSecurityGroup:
     Type: AWS::EC2::SecurityGroup::Id
     Description: Security Group allowing HTTPS traffic to the VPC endpoints
