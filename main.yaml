@@ -111,6 +111,8 @@ Resources:
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
         ECSServiceName: !GetAtt ECSServiceStack.Outputs.ECSService
+        BlueTargetGroupArn: !GetAtt ALBStack.Outputs.BlueTargetGroupArn
+        GreenTargetGroupArn: !GetAtt ALBStack.Outputs.GreenTargetGroupArn
         ALBListener: !GetAtt ALBStack.Outputs.ALBListener
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
         ProjectTag: !Ref ProjectTag
