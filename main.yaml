@@ -59,8 +59,8 @@ Resources:
         PrivateSubnet1: !GetAtt VPCStack.Outputs.PrivateSubnet1
         PrivateSubnet2: !GetAtt VPCStack.Outputs.PrivateSubnet2
         EndpointSecurityGroup: !GetAtt VPCStack.Outputs.VPCEndpointSecurityGroup
-        PrivateRouteTable1: !GetAtt VPCStack.Outputs.PrivateRouteTable1
-        PrivateRouteTable2: !GetAtt VPCStack.Outputs.PrivateRouteTable2
+        # PrivateRouteTable1: !GetAtt VPCStack.Outputs.PrivateRouteTable1
+        # PrivateRouteTable2: !GetAtt VPCStack.Outputs.PrivateRouteTable2
         ProjectTag: !Ref ProjectTag
 
   ECSClusterStack:
