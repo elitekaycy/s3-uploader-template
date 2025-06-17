@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'vpc endpoins for stuff'
 
 Parameters:
+  EnvironmentName:
+    Description: 'Application environment name'
+    Type: String
+
   VPCId:
     Type: AWS::EC2::VPC::Id
     Description: VPC where the interface endpoints will be created
