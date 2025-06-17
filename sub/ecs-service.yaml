@@ -44,28 +44,7 @@ Parameters:
     Default: 'week_5_project'
 
 
-Resources:
-  UploaderECRRepository:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryName: !Ref ECRRepoName
-      RepositoryPolicyText:
-        Version: '2012-10-17'
-        Statement:
-          - Sid: AllowECSExecutionRolePull
-            Effect: Allow
-            Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action:
-              - ecr:BatchCheckLayerAvailability
-              - ecr:GetDownloadUrlForLayer
-              - ecr:BatchGetImage
-      Tags:
-        - Key: Name
-          Value: !Sub ${EnvironmentName}-uploader-ecr
-        - Key: Project
-          Value: !Ref ProjectTag
-        
+Resources:        
   ECSExecutionRole:
     Type: AWS::IAM::Role
     Properties:
