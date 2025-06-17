@@ -41,8 +41,8 @@ Resources:
       VpcId: !Ref VPCId
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 8080
+          ToPort: 8080
           SourceSecurityGroupId: !Ref ALBSecurityGroup
       Tags:
         - Key: Name
