@@ -126,6 +126,13 @@ Resources:
                   - 'kms:Decrypt'
                 Resource:
                   - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/scale-app/dev/aws/*
+              - Effect: Allow
+                Action:
+                  - 'ecr:GetAuthorizationToken'
+                  - 'ecr:BatchCheckLayerAvailability'
+                  - 'ecr:GetDownloadUrlForLayer'
+                  - 'ecr:BatchGetImage'
+                Resource: '*'
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-ecs-task-role
