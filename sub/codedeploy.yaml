@@ -8,7 +8,7 @@ Parameters:
     Type: String
   ECSServiceName:
     Type: String
-  ALBListenerArn:
+  ALBListener:
     Type: String
   AutoScalingRoleArn:
     Type: String
@@ -61,7 +61,7 @@ Resources:
               - Name: !Sub ${EnvironmentName}-tg-green
             ProdTrafficRoute:
               ListenerArns:
-                - !Ref ALBListenerArn
+                - !Ref ALBListener
       ECSService:
         ClusterName: !Ref ECSCluster
         ServiceName: !Ref ECSServiceName
