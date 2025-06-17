@@ -38,11 +38,13 @@ Parameters:
   AutoScalingRoleArn:
     Description: 'ARN of the IAM Role for ECS Auto Scaling'
     Type: String
+  VPCEndpointSecurityGroup:
+    Description: 'Security Group ID for VPC endpoints'
+    Type: AWS::EC2::SecurityGroup::Id
   ProjectTag:
     Description: 'Project tag to group related resources'
     Type: String
     Default: 'week_5_project'
-
 
 Resources:        
   ECSExecutionRole:
@@ -67,6 +69,9 @@ Resources:
                   - 'ecr:BatchCheckLayerAvailability'
                   - 'ecr:GetDownloadUrlForLayer'
                   - 'ecr:BatchGetImage'
+                  - 'ecr:DescribeRepositories'
+                  - 'ecr:ListImages'
+                  - 'ecr:DescribeImages'
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
                   - 'logs:CreateLogGroup'
@@ -110,14 +115,17 @@ Resources:
                   - 's3:PutObject'
                   - 's3:GetObject'
                   - 's3:ListBucket'
-                  - ssm:GetParameters
-                  - ssm:GetParameter
-                  - kms:Decrypt
+                  - 's3:DeleteObject'
                 Resource:
                   - !Sub arn:aws:s3:::${S3BucketName}
                   - !Sub arn:aws:s3:::${S3BucketName}/*
+              - Effect: Allow
+                Action:
+                  - 'ssm:GetParameters'
+                  - 'ssm:GetParameter'
+                  - 'kms:Decrypt'
+                Resource:
                   - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/scale-app/dev/aws/*
-
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-ecs-task-role
@@ -138,6 +146,7 @@ Resources:
       ContainerDefinitions:
         - Name: !Sub ${EnvironmentName}-uploader-container
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepoName}:latest
+          Essential: true
           PortMappings:
             - ContainerPort: 8080
               Protocol: tcp
@@ -167,7 +176,6 @@ Resources:
         - Key: Project
           Value: !Ref ProjectTag
 
-
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -193,6 +201,7 @@ Resources:
           AssignPublicIp: DISABLED
           SecurityGroups:
             - !Ref ECSSecurityGroup
+            - !Ref VPCEndpointSecurityGroup
           Subnets:
             - !Ref PrivateSubnet1
             - !Ref PrivateSubnet2

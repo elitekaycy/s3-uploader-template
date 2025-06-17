@@ -99,6 +99,7 @@ Resources:
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
         BlueTargetGroupArn: !GetAtt ALBStack.Outputs.BlueTargetGroupArn
         GreenTargetGroupArn: !GetAtt ALBStack.Outputs.GreenTargetGroupArn
+        VPCEndpointSecurityGroup: !GetAtt VPCStack.Outputs.VPCEndpointSecurityGroup
         ECRRepoName: !Ref ECRRepoName
         ProjectTag: !Ref ProjectTag
 
