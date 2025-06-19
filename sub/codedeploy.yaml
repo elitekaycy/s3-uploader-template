@@ -62,7 +62,7 @@ Resources:
         TargetGroupPairInfoList:
           - TargetGroups:
               - Name: !Ref BlueTargetGroupArn
-              - Name: !Sub GreenTargetGroupArn
+              - Name: !Ref GreenTargetGroupArn
             ProdTrafficRoute:
               ListenerArns:
                 - !Ref ALBListener
