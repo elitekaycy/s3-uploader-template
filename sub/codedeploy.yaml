@@ -96,6 +96,9 @@ Resources:
 
   CodeDeployDeploymentGroup:
     Type: AWS::CodeDeploy::DeploymentGroup
+    DependsOn:
+      - CodeDeployRole
+      - CodeDeployApplication
     Properties:
       ApplicationName: !Ref CodeDeployApplication
       DeploymentGroupName: !Sub ${EnvironmentName}-uploader-deployment-group
@@ -119,9 +122,9 @@ Resources:
             ProdTrafficRoute:
               ListenerArns:
                 - !Ref ALBListener
-      ECSService:
-        ClusterName: !Ref ECSCluster
-        ServiceName: !Ref ECSServiceName
+      ECSServices:
+        - ClusterName: !Ref ECSCluster
+          ServiceName: !Ref ECSServiceName
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-deployment-group
