@@ -259,3 +259,15 @@ Outputs:
     Value: !Ref ECSTaskDefinition
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-Task-Def
+
+  ECSExecutionRoleArn:
+    Description: 'ARN of the ECS Execution Role'
+    Value: !GetAtt ECSExecutionRole.Arn
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-ECS-Execution-Role
+
+  ECSTaskRoleArn:
+    Description: 'ARN of the ECS Task Role'
+    Value: !GetAtt ECSTaskRole.Arn
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-ECS-Task-Role

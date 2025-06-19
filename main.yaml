@@ -103,6 +103,7 @@ Resources:
         ECRRepoName: !Ref ECRRepoName
         ProjectTag: !Ref ProjectTag
 
+
   CODEdeployStack:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -111,12 +112,14 @@ Resources:
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
         ECSServiceName: !GetAtt ECSServiceStack.Outputs.ECSService
+        ECSExecutionRoleArn: !GetAtt ECSServiceStack.Outputs.ECSExecutionRoleArn
+        ECSTaskRoleArn: !GetAtt ECSServiceStack.Outputs.ECSTaskRoleArn
         BlueTargetGroupArn: !GetAtt ALBStack.Outputs.BlueTargetGroupArn
         GreenTargetGroupArn: !GetAtt ALBStack.Outputs.GreenTargetGroupArn
         ALBListener: !GetAtt ALBStack.Outputs.ALBListener
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
         ProjectTag: !Ref ProjectTag
-
+ 
 Outputs:
   ALBDNSName:
     Description: 'DNS name of the ALB'

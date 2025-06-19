@@ -12,6 +12,10 @@ Parameters:
     Type: String
   AutoScalingRoleArn:
     Type: String
+  ECSExecutionRoleArn:
+    Type: String
+  ECSTaskRoleArn:
+    Type: String
   BlueTargetGroupArn:
     Type: String
   GreenTargetGroupArn:
@@ -74,8 +78,10 @@ Resources:
               - Effect: Allow
                 Action:
                   - iam:PassRole
-                Resource: 
-                  - !Ref AutoScalingRoleArn  
+                Resource:
+                  - !Ref AutoScalingRoleArn
+                  - !Ref ECSExecutionRoleArn
+                  - !Ref ECSTaskRoleArn
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-codedeploy-role
