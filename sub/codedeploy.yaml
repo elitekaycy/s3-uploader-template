@@ -115,13 +115,9 @@ Resources:
           ActionOnTimeout: CONTINUE_DEPLOYMENT
           WaitTimeInMinutes: 0
       LoadBalancerInfo:
-        TargetGroupPairInfoList:
-          - TargetGroups:
-              - TargetGroupArn: !Ref BlueTargetGroupArn
-              - TargetGroupArn: !Ref GreenTargetGroupArn
-            ProdTrafficRoute:
-              ListenerArns:
-                - !Ref ALBListener
+        TargetGroupInfoList:
+          - Name: !Ref BlueTargetGroupArn
+          - Name: !Ref GreenTargetGroupArn
       ECSServices:
         - ClusterName: !Ref ECSCluster
           ServiceName: !Ref ECSServiceName
