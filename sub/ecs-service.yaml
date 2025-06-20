@@ -254,6 +254,12 @@ Outputs:
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-ECS-Service
 
+  ECSServiceName:
+    Description: 'ECS Service Name'
+    Value: !Sub ${EnvironmentName}-uploader-service
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-ECS-Service-Name
+
   ECSTaskDefinitionArn:
     Description: 'ARN of the ECS Task Definition'
     Value: !Ref ECSTaskDefinition

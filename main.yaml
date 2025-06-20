@@ -111,7 +111,7 @@ Resources:
       Parameters:
         EnvironmentName: !Ref EnvironmentName
         ECSCluster: !GetAtt ECSClusterStack.Outputs.ECSCluster
-        ECSServiceName: !GetAtt ECSServiceStack.Outputs.ECSService
+        ECSServiceName: !GetAtt ECSServiceStack.Outputs.ECSServiceName
         ECSExecutionRoleArn: !GetAtt ECSServiceStack.Outputs.ECSExecutionRoleArn
         ECSTaskRoleArn: !GetAtt ECSServiceStack.Outputs.ECSTaskRoleArn
         BlueTargetGroupArn: !GetAtt ALBStack.Outputs.BlueTargetGroupArn
