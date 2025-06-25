@@ -45,12 +45,13 @@
           "valueFrom": "arn:aws:ssm:eu-central-1:205930614431:parameter/scale-app/dev/aws/secret_key"
         }
       ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "/ecs/dev-uploader-service",
-        "awslogs-region": "eu-central-1",
-        "awslogs-stream-prefix": "ecs"
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dev-uploader-service",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        }
       }
     }
   ],
@@ -65,3 +66,4 @@
     }
   ]
 }
+

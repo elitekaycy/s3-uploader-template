@@ -33,10 +33,15 @@ jobs:
             --include "*.yaml" \
             --include "*.yml"
 
-      - name: Upload taskdef.json to S3
+      - name: Zip CodeDeploy files
         run: |
-          aws s3 cp pipeline/taskdef.json s3://s3-uploader-pipeline-dev/taskdef.json
+          cd pipeline
+          zip -r codedeploy-bundle.zip appspec.yaml taskdef.json imagedefinitions.json
 
+      - name: Upload codedeploy-bundle.zip to S3
+        run: |
+          aws s3 cp pipeline/codedeploy-bundle.zip s3://s3-uploader-pipeline-dev/codedeploy-bundle.zip
+ 
       - name: Print uploaded Template URLs
         run: |
           echo "Templates uploaded to:"
