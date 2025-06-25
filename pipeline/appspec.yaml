@@ -7,4 +7,3 @@ Resources:
         LoadBalancerInfo:
           ContainerName: dev-uploader-container
           ContainerPort: 8080
-
