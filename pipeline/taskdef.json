@@ -1,0 +1,67 @@
+{
+  "family": "dev-uploader-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceSta-ECSExecutionRole-xFSuQADLPhgc",
+  "taskRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceStack-1Q-ECSTaskRole-FzKhDGPB5Wnc",
+  "containerDefinitions": [
+    {
+      "name": "dev-uploader-container",
+      "image": "205930614431.dkr.ecr.eu-central-1.amazonaws.com/uploader-repo:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "S3_BUCKET_NAME",
+          "value": "dev-uploader-images-205930614431"
+        },
+        {
+          "name": "ENVIRONMENT",
+          "value": "dev"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "eu-central-1"
+        },
+        {
+          "name": "AWS_S3_BUCKET",
+          "value": "dev-uploader-images-205930614431"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "AWS_ACCESS_KEY",
+          "valueFrom": "arn:aws:ssm:eu-central-1:205930614431:parameter/scale-app/dev/aws/access_key"
+        },
+        {
+          "name": "AWS_SECRET_KEY",
+          "valueFrom": "arn:aws:ssm:eu-central-1:205930614431:parameter/scale-app/dev/aws/secret_key"
+        }
+      ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/dev-uploader-service",
+        "awslogs-region": "eu-central-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "key": "Name",
+      "value": "dev-uploader-task-def"
+    },
+    {
+      "key": "Project",
+      "value": "week_5_project"
+    }
+  ]
+}

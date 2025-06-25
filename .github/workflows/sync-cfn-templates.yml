@@ -33,6 +33,10 @@ jobs:
             --include "*.yaml" \
             --include "*.yml"
 
+      - name: Upload taskdef.json to S3
+        run: |
+          aws s3 cp pipeline/taskdef.json s3://s3-uploader-pipeline-dev/taskdef.json
+
       - name: Print uploaded Template URLs
         run: |
           echo "Templates uploaded to:"

@@ -137,3 +137,10 @@ Outputs:
     Value: !Ref CodeDeployDeploymentGroup
     Export:
       Name: !Sub ${EnvironmentName}-Uploader-CodeDeploy-DeploymentGroup
+
+  CodeDeployApplication:
+    Description: 'CodeDeploy Application for ECS Blue/Green'
+    Value: !Ref CodeDeployApplication
+    Export:
+      Name: !Sub ${EnvironmentName}-Uploader-CodeDeploy-Application
+

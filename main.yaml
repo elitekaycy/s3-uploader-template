@@ -119,6 +119,18 @@ Resources:
         ALBListener: !GetAtt ALBStack.Outputs.ALBListener
         AutoScalingRoleArn: !GetAtt ECSClusterStack.Outputs.ECSAutoScalingRoleArn
         ProjectTag: !Ref ProjectTag
+
+  CodePipelineStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateBaseURL}/pipeline.yaml"
+      Parameters:
+        EnvironmentName: !Ref EnvironmentName
+        ECRRepoName: !Ref ECRRepoName
+        S3TaskDefKey: taskdef.json
+        CodeDeployApplication: !GetAtt CODEdeployStack.Outputs.CodeDeployApplication
+        CodeDeployDeploymentGroup: !GetAtt CODEdeployStack.Outputs.CodeDeployDeploymentGroup
+        ProjectTag: !Ref ProjectTag
  
 Outputs:
   ALBDNSName:
