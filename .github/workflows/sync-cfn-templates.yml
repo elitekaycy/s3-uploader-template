@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload codedeploy-bundle.zip to S3
         run: |
-          aws s3 cp pipeline/codedeploy-bundle.zip s3://s3-uploader-pipeline-dev/codedeploy-bundle.zip
+          aws s3 cp codedeploy-bundle.zip s3://s3-uploader-pipeline-dev/codedeploy-bundle.zip
  
       - name: Print uploaded Template URLs
         run: |
