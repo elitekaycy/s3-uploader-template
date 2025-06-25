@@ -4,8 +4,8 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
-  "executionRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceSta-ECSExecutionRole-xFSuQADLPhgc",
-  "taskRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceStack-1Q-ECSTaskRole-FzKhDGPB5Wnc",
+  "executionRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceSta-ECSExecutionRole-Sb3v2L9imAuC",
+  "taskRoleArn": "arn:aws:iam::205930614431:role/s3-uploader-template-ECSServiceStack-Y4-ECSTaskRole-vPtKLi1qulMa",
   "containerDefinitions": [
     {
       "name": "dev-uploader-container",
