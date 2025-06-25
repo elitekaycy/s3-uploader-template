@@ -132,6 +132,7 @@ Resources:
         CodeDeployDeploymentGroup: !GetAtt CODEdeployStack.Outputs.CodeDeployDeploymentGroup
         ProjectTag: !Ref ProjectTag
  
+
 Outputs:
   ALBDNSName:
     Description: 'DNS name of the ALB'

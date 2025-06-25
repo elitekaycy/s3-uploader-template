@@ -139,6 +139,7 @@ Resources:
         - Key: Project
           Value: !Ref ProjectTag
 
+
   ECRPushEvent:
     Type: AWS::Events::Rule
     Properties:
