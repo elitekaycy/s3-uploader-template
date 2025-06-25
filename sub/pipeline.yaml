@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CodePipeline to deploy to ECS using CodeDeploy on ECR image push (static taskdef in S3)
+Description: CodePipeline to deploy to ECS using CodeDeploy on ECR image push (static codedeploy-bundle.zip in S3)
 
 Parameters:
   EnvironmentName:
