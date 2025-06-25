@@ -25,6 +25,7 @@ Parameters:
     Default: 'week_5_project'
 
 Resources:
+
   CodeDeployRole:
     Type: AWS::IAM::Role
     Properties:
@@ -82,6 +83,12 @@ Resources:
                   - !Ref AutoScalingRoleArn
                   - !Ref ECSExecutionRoleArn
                   - !Ref ECSTaskRoleArn
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                Resource:
+                  - !Sub arn:aws:s3:::${ArtifactBucket}/*
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-uploader-codedeploy-role

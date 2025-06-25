@@ -69,6 +69,32 @@ Resources:
         - Key: Project
           Value: !Ref ProjectTag
 
+  EventBridgeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${EnvironmentName}-eventbridge-pipeline-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: events.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: StartPipelinePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - codepipeline:StartPipelineExecution
+                Resource: !Sub arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${EnvironmentName}-uploader-pipeline
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-eventbridge-pipeline-role
+        - Key: Project
+          Value: !Ref ProjectTag
+
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -134,7 +160,7 @@ Resources:
       Targets:
         - Arn: !Sub arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${EnvironmentName}-uploader-pipeline
           Id: codepipeline
-          RoleArn: !GetAtt CodePipelineRole.Arn
+          RoleArn: !GetAtt EventBridgeRole.Arn
 
 Outputs:
   PipelineName:
