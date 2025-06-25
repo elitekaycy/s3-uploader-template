@@ -16,6 +16,9 @@ Parameters:
     Type: String
   ECSTaskRoleArn:
     Type: String
+  ArtifactBucket:
+    Type: String
+    Default: 's3-uploader-pipeline-dev'
   BlueTargetGroupArn:
     Type: String
   GreenTargetGroupArn:
@@ -25,7 +28,6 @@ Parameters:
     Default: 'week_5_project'
 
 Resources:
-
   CodeDeployRole:
     Type: AWS::IAM::Role
     Properties:
