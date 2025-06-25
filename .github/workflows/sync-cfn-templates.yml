@@ -36,8 +36,7 @@ jobs:
       - name: Zip CodeDeploy files
         run: |
           cd pipeline
-          zip ../codedeploy-bundle.zip appspec.yaml taskdef.json imagedefinitions.json
-
+          zip ../codedeploy-bundle.zip appspec.yaml taskdef.json imagedefinition.json
       - name: Upload codedeploy-bundle.zip to S3
         run: |
           aws s3 cp codedeploy-bundle.zip s3://s3-uploader-pipeline-dev/codedeploy-bundle.zip
