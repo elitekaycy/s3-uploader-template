@@ -14,26 +14,15 @@
       "portMappings": [
         {
           "containerPort": 8080,
+          "hostPort": 8080,
           "protocol": "tcp"
         }
       ],
       "environment": [
-        {
-          "name": "S3_BUCKET_NAME",
-          "value": "dev-uploader-images-205930614431"
-        },
-        {
-          "name": "ENVIRONMENT",
-          "value": "dev"
-        },
-        {
-          "name": "AWS_REGION",
-          "value": "eu-central-1"
-        },
-        {
-          "name": "AWS_S3_BUCKET",
-          "value": "dev-uploader-images-205930614431"
-        }
+        { "name": "AWS_REGION", "value": "eu-central-1" },
+        { "name": "AWS_S3_BUCKET", "value": "dev-uploader-images-205930614431" },
+        { "name": "S3_BUCKET_NAME", "value": "dev-uploader-images-205930614431" },
+        { "name": "ENVIRONMENT", "value": "dev" }
       ],
       "secrets": [
         {
@@ -53,16 +42,6 @@
           "awslogs-stream-prefix": "ecs"
         }
       }
-    }
-  ],
-  "tags": [
-    {
-      "key": "Name",
-      "value": "dev-uploader-task-def"
-    },
-    {
-      "key": "Project",
-      "value": "week_5_project"
     }
   ]
 }
