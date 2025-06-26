@@ -53,18 +53,18 @@ Resources:
       VpcEndpointType: Interface
       PrivateDnsEnabled: true
 
-  EC2MessagesEndpoint:
-    Type: AWS::EC2::VPCEndpoint
-    Properties:
-      ServiceName: !Sub com.amazonaws.${AWS::Region}.ec2messages
-      VpcId: !Ref VPCId
-      SubnetIds:
-        - !Ref PrivateSubnet1
-        - !Ref PrivateSubnet2
-      SecurityGroupIds:
-        - !Ref EndpointSecurityGroup
-      VpcEndpointType: Interface
-      PrivateDnsEnabled: true
+  # EC2MessagesEndpoint:
+  #   Type: AWS::EC2::VPCEndpoint
+  #   Properties:
+  #     ServiceName: !Sub com.amazonaws.${AWS::Region}.ec2messages
+  #     VpcId: !Ref VPCId
+  #     SubnetIds:
+  #       - !Ref PrivateSubnet1
+  #       - !Ref PrivateSubnet2
+  #     SecurityGroupIds:
+  #       - !Ref EndpointSecurityGroup
+  #     VpcEndpointType: Interface
+  #     PrivateDnsEnabled: true
 
   KMSEndpoint:
     Type: AWS::EC2::VPCEndpoint
