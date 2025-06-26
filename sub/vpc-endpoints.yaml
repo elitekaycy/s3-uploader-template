@@ -92,11 +92,11 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-SSMMessagesEndpointId"
 
-  EC2MessagesEndpointId:
-    Description: The ID of the VPC endpoint for EC2Messages
-    Value: !Ref EC2MessagesEndpoint
-    Export:
-      Name: !Sub "${AWS::StackName}-EC2MessagesEndpointId"
+  # EC2MessagesEndpointId:
+  #   Description: The ID of the VPC endpoint for EC2Messages
+  #   Value: !Ref EC2MessagesEndpoint
+  #   Export:
+  #     Name: !Sub "${AWS::StackName}-EC2MessagesEndpointId"
 
   KMSEndpointId:
     Description: The ID of the VPC endpoint for KMS
